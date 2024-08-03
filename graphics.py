@@ -1,4 +1,4 @@
-from tkinter import Tk, BOTH, Canvas
+from tkinter import Tk, BOTH, Canvas, Label, StringVar
 
 class Window:
     def __init__(self, width, height):
@@ -10,6 +10,20 @@ class Window:
         self._canvas = Canvas(self._root, bg="#282728", height=height, width=width)
         self._canvas.pack(fill=BOTH, expand=1)
         self._running = False
+
+        self._generation_var = StringVar()
+        self._generation_label = Label(self._root, textvariable=self._generation_var, fg='white', bg='#282728')
+        self._generation_label.pack()
+
+        self._population_var = StringVar()
+        self._generation_label = Label(self._root, textvariable=self._population_var, fg='white', bg='#282728')
+        self._generation_label.pack()
+
+    def set_generation(self, generation):
+        self._generation_var.set(f"Generation: {generation}")
+
+    def set_population(self, population):
+        self._population_var.set(f"Population: {population}")
         
     def get_canvas(self):
         return self._canvas

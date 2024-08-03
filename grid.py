@@ -1,4 +1,5 @@
 from graphics import Line, Point
+from tkinter import ttk
 import time
 
 class Grid:
@@ -13,9 +14,9 @@ class Grid:
         self._win._canvas.bind("<B1-Motion>", self.pan)
         self._win._canvas.bind("<Double-Button-1>", self.start_simulation)
         self._win._canvas.bind("<Button-3>", self.toggle_cell)
+        self._win._canvas.bind("<Control Button-1>", self.restart)
+        self._win._canvas.bind("<Shift Button-1>", self.pause)
 
-        # self._win.bind_event("<MouseWheel>", self.zoom)
-        # self._win.bind_event("<Configure>", self.on_resize)
 
     def draw(self):
         screen_x = self._win._width
@@ -24,6 +25,8 @@ class Grid:
         self._win._canvas.create_rectangle(0, 0, screen_x, screen_y, fill='#282728')
 
         if self._sim is not None:
+            self._win.set_generation(self._sim._generation)
+            self._win.set_population(len(self._sim._cells))
             i_range = ((-self.offset_x ) // self.grid_size, (screen_x -self.offset_x ) // self.grid_size)
             j_range = ((self.offset_y ) // self.grid_size, (screen_y + self.offset_y ) // self.grid_size)
             
@@ -67,9 +70,11 @@ class Grid:
         alive = (i,j) in self._sim._cells
         if alive:
             self._sim.kill_cell(i,j)
+            self._win.set_population(len(self._sim._cells))
             self.draw_cell(i,j, False)
         else:
             self._sim.add_cell(i,j)
+            self._win.set_population(len(self._sim._cells))
             self.draw_cell(i,j, True)
 
     def start_pan(self, event):
@@ -83,15 +88,30 @@ class Grid:
         self.last_y = event.y
         self.draw()
 
-    def start_simulation(self, event):
+    def start_simulation(self, _=None):
         if self._sim is None:
             return
         self._simmulating = True
+        print("running simmulation...")
         while self._simmulating:
             self._sim.advance_generation()
             self.draw()
             self._animate(0.1)
-            print(self._sim._generation)
+            
+
+    def restart(self, _):
+        print("simmulation restarted...")
+        self._simmulating = False
+        self._sim._cells = self._sim._initial_cells
+        self._sim._generation = 1
+        self.draw()
+
+    def pause(self, _):
+        if self._simmulating:
+            print("simmulation paused...")
+            self._simmulating = False
+            return
+        self.start_simulation()
             
 
     def _animate(self, animation_speed):

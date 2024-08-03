@@ -9,10 +9,14 @@ class Life_Simulation:
 
     def add_cell(self, i,j):
         self._cells.add((i,j))
+        if self._generation == 1:
+            self._initial_cells.add((i,j))
 
     def kill_cell(self, i,j):
         if (i,j) in self._cells:
             self._cells.remove((i,j))
+        if self._generation == 1 and (i,j) in self._initial_cells:
+            self._initial_cells.remove((i,j))
     
 
     def get_next_generation(self):
