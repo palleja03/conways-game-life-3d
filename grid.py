@@ -127,7 +127,7 @@ class Grid:
         print("simmulation restarted...")
         self._simmulating = False
         self._sim._cells = self._sim._initial_cells
-        self._sim._generation = 1
+        self._sim._generation = 0
         self.draw()
 
     def pause(self, _):

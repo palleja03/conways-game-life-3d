@@ -4,18 +4,18 @@ import time
 class Life_Simulation:
     def __init__(self, size = 0, torus= False):
         self._cells = set([])
-        self._generation = 1
+        self._generation = 0
         self._initial_cells = set([])
 
     def add_cell(self, i,j):
         self._cells.add((i,j))
-        if self._generation == 1:
+        if self._generation == 0:
             self._initial_cells.add((i,j))
 
     def kill_cell(self, i,j):
         if (i,j) in self._cells:
             self._cells.remove((i,j))
-        if self._generation == 1 and (i,j) in self._initial_cells:
+        if self._generation == 0 and (i,j) in self._initial_cells:
             self._initial_cells.remove((i,j))
     
 
