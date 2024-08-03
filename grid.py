@@ -1,5 +1,4 @@
 from graphics import Line, Point
-from tkinter import ttk
 import time
 
 class Grid:
@@ -16,6 +15,9 @@ class Grid:
         self._win._canvas.bind("<Button-3>", self.toggle_cell)
         self._win._canvas.bind("<Control Button-1>", self.restart)
         self._win._canvas.bind("<Shift Button-1>", self.pause)
+        # self._win._canvas.bind("<MouseWheel>", self.on_mouse_wheel)
+        self._win._canvas.bind("<Button-4>", self.on_mouse_wheel_up)
+        self._win._canvas.bind("<Button-5>", self.on_mouse_wheel_down)
 
 
     def draw(self):
@@ -86,6 +88,28 @@ class Grid:
         self.offset_y += event.y - self.last_y
         self.last_x = event.x
         self.last_y = event.y
+        self.draw()
+
+    def on_mouse_wheel(self, event):
+        print(event)
+        if event.delta > 0:
+            # Scroll up
+            self.grid_size += 10
+        elif event.delta < 0:
+            # Scroll down
+            if self.grid_size <25:
+                return
+            self.grid_size -= 10
+        self.draw()
+
+    def on_mouse_wheel_up(self, event):
+        self.grid_size += 10
+        self.draw()
+
+    def on_mouse_wheel_down(self, event):
+        if self.grid_size < 25:
+            return
+        self.grid_size -= 10
         self.draw()
 
     def start_simulation(self, _=None):
