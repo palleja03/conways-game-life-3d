@@ -1,6 +1,7 @@
 # Conways Game of Life in Python 3
 
 The Game of Life, also known just as *Life* is a celullar automaton. Based on simple rules, cell can live, die or revive neighbors. 
+![simmulation](https://github.com/user-attachments/assets/91290d45-d57a-4012-93bd-0f38d4d54ab2)
 
 ## Rules
 
