@@ -2,31 +2,33 @@ from tkinter import Tk, BOTH, Canvas
 
 class Window:
     def __init__(self, width, height):
-        self.__root = Tk()
-        self.__root.title("Maze Solver")
-        self.__root.protocol("WM_DELETE_WINDOW", self.close)
-        self.__canvas = Canvas(self.__root, bg="#282728", height=height, width=width)
-        self.__canvas.pack(fill=BOTH, expand=1)
-        self.__running = False
+        self._height = height
+        self._width = width
+        self._root = Tk()
+        self._root.title("Game of Life")
+        self._root.protocol("WM_DELETE_WINDOW", self.close)
+        self._canvas = Canvas(self._root, bg="#282728", height=height, width=width)
+        self._canvas.pack(fill=BOTH, expand=1)
+        self._running = False
         
     def get_canvas(self):
-        return self.__canvas
+        return self._canvas
     
     def redraw(self):
-        self.__root.update_idletasks()
-        self.__root.update()
+        self._root.update_idletasks()
+        self._root.update()
 
     def wait_for_close(self):
-        self.__running = True
-        while self.__running:
+        self._running = True
+        while self._running:
             self.redraw()
         print("window closed...")
 
     def draw_line(self, line, fill_color = "gray"):
-        line.draw(self.__canvas, fill_color)
+        line.draw(self._canvas, fill_color)
 
     def close(self):
-        self.__running = False
+        self._running = False
 
 class Point:
     def __init__(self, x,y,z=0):

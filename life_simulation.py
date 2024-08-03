@@ -79,28 +79,32 @@ class Life_Simulation:
             self.advance_generation()
 
 
-def print_clear():
-    if os.name == 'nt':
-        _ = os.system('cls')
-    else:
-        _ = os.system('clear')
+if __name__ == "__main__":
+    def print_clear():
+        if os.name == 'nt':
+            _ = os.system('cls')
+        else:
+            _ = os.system('clear')
 
-# Example usage
-sim = Life_Simulation()
-# Add Penta-decathlon
-sim.add_cell(5,5)
-sim.add_cell(5,6)
-sim.add_cell(4,7)
-sim.add_cell(6,7)
-sim.add_cell(5,8)
-sim.add_cell(5,9)
-sim.add_cell(5,10)
-sim.add_cell(5,11)
-sim.add_cell(4,12)
-sim.add_cell(6,12)
-sim.add_cell(5,13)
-sim.add_cell(5,14)
+    def penta_decathlon_sim():
+        # Example usage
+        sim = Life_Simulation()
+        # Add Penta-decathlon
+        sim.add_cell(5,5)
+        sim.add_cell(5,6)
+        sim.add_cell(4,7)
+        sim.add_cell(6,7)
+        sim.add_cell(5,8)
+        sim.add_cell(5,9)
+        sim.add_cell(5,10)
+        sim.add_cell(5,11)
+        sim.add_cell(4,12)
+        sim.add_cell(6,12)
+        sim.add_cell(5,13)
+        sim.add_cell(5,14)
 
 
-# Run the simulation
-sim.run_simulation(generations=100, grid_size=30, live_cell='o')
+        # Run the simulation
+        sim.run_simulation(generations=100, grid_size=20, live_cell='o')
+
+    penta_decathlon_sim()
